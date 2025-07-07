@@ -11,6 +11,10 @@
 
     <!--css file link-->
     <link rel="stylesheet" href="css/style.css">
+    
+
+
+
 
 </head>
 <body>
@@ -32,10 +36,17 @@
             </nav>
             <div class="icons">
                 <a href="#" class="fas fa-heart"></a>
-                <a href="#" class="fas fa-shopping-cart"></a>
-                <a href="#" class="fas fa-user"></a>
-
+                <a href="cart.html" class="fas fa-shopping-cart" id="cart-icon">        
+                    <span class="cart-count">0</span>
+                </a><div class="user-menu">
+            <a href="#" class="fas fa-user" id="user-icon"></a>
+            <div class="dropdown" id="user-dropdown">
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
             </div>
+            </div>
+            </div>
+             
         </header>
 
         <!--header ends-->
@@ -297,24 +308,31 @@
                 </section>
 
 <!--Contact-->
-            <section class="contact" id="contact">
-                <h1 class="heading"> <span> contact </span> us</h1>
-                <div class="row">
-                    <form>
-                        <input type="text" placeholder="your name " class="box">
-                        <input type="email" placeholder="your email " class="box">
-                        <input type="tel" placeholder="your number " class="box">
-                        <textarea name="" class="box" placeholder="enter massage" id="" cols="30" rows="10"></textarea>
-                        <input type="submit" value="send message" class="btn">
-                    </form>
-                    <div class="image">
-                        <img src="images/magasin flowers 🌸.jpeg" alt="">
-                    </div>
+<section class="contact" id="contact">
+  <h1 class="heading"><span>Contact</span> Us</h1>
+  <div class="row">
+<form
+  action="https://formspree.io/f/mzzglbaz"
+  method="POST"
+  id="contact-form"
+>
+  <input type="text" name="name" placeholder="Your Name" class="box" id="name" required>
+  <input type="email" name="email" placeholder="Your Email" class="box" id="email" required>
+  <input type="tel" name="phone" placeholder="Your Phone Number" class="box" id="phone" required>
+  <textarea name="message" class="box" placeholder="Enter Message" id="message" cols="30" rows="8" required></textarea>
+  
+  <input type="submit" value="Send Message" class="btn">
+  
+  <p id="form-msg" style="margin-top: 1rem; color: green; font-weight: bold;"></p>
+</form>
 
-                    </div>
-                
-            </section>
 
+    <div class="image">
+      <img src="images/magasin flowers 🌸.jpeg" alt="Contact Image">
+    </div>
+
+  </div>
+</section>
 <!-- Footer -->
 <section class="footer">
     <div class="box-container">
@@ -352,3 +370,7 @@
         Crafted by Hind Abdeslamat <span>Web Developer</span> | All rights reserved © 2025
     </div>
 </section>
+  <script src="script.js"></script>
+</body>
+</html>
+

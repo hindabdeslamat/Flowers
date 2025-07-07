@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+<link rel="stylesheet" href="css/login.css">
+  <!-- Font & Style -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="loginUser()">Login</button>
+    <div class="message" id="message"></div>
+    <div class="link">Don't have an account? <a href="register.html">Register</a></div>
+  </div>
+
+  <script>
+    function loginUser() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      if (!storedUser) {
+        message.textContent = "No registered user found.";
+        return;
+      }
+
+      if (email === storedUser.email && password === storedUser.password) {
+        message.style.color = "green";
+        message.textContent = "Login successful! Redirecting...";
+        localStorage.setItem("loggedIn", "true");
+        setTimeout(() => {
+          window.location.href = "index2.html.html"; // redirect to homepage
+        }, 1500);
+      } else {
+        message.style.color = "red";
+        message.textContent = "Invalid credentials.";
+      }
+    }
+  </script>
+</body>
+</html>

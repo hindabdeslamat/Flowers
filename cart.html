@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Cart</title>
+
+  <!-- Font Awesome & CSS style file -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    body { 
+      background-color: #fff0f5; 
+      font-family: 'Poppins', sans-serif;
+      padding: 2rem;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c45b5b; 
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .cart-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fce4ec;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background-color: #fff; 
+      border-radius: 8px;
+      border-left: 5px solid #f8bbd0; 
+    }
+
+    .cart-item-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #5c3d44; 
+    }
+
+    .cart-item-quantity {
+      color: #7c6169; 
+    }
+
+    .remove-btn {
+      background-color: #ec407a; 
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.3s;
+    }
+
+    .remove-btn:hover {
+      background-color: #c2185b; 
+    }
+
+    .empty-message {
+      text-align: center;
+      color: #c45b5b;
+      margin-top: 2rem;
+      font-size: 1.2rem;
+    }
+
+    .btn-back {
+      display: block;
+      width: fit-content;
+      margin: 2rem auto 0;
+      background: #f06292; 
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .btn-back:hover {
+      background: #e91e63; 
+    }
+
+    .cart-summary {
+      max-width: 800px;
+      margin: 1rem auto;
+      background-color: #fce4ec;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    .cart-summary p {
+      font-size: 1.3rem;
+      color: #c2185b;
+      margin-bottom: 1rem;
+    }
+
+    .clear-cart-btn {
+      background-color: #e57373;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .clear-cart-btn:hover {
+      background-color: #c62828;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Your Cart 🛍️</h1>
+
+  <div class="cart-container" id="cart-container">
+    <!-- Items will be injected here -->
+  </div>
+
+  <div class="cart-summary" id="cart-summary" style="display:none;">
+    <p>Total: <span id="total-price">$0.00</span></p>
+    <button class="clear-cart-btn" id="clear-cart-btn">Clear Cart</button>
+  </div>
+
+  <a href="index2.html.html" class="btn-back">← Back to Shop</a>
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-container");
+    const totalDisplay = document.getElementById("total-price");
+    const summarySection = document.getElementById("cart-summary");
+
+    function getProductPrice(title) {
+      const prices = {
+        "Flower Pot": 13.99,
+      };
+      return prices[title] || 10.00; // Default price if not found
+    }
+
+    function renderCart() {
+      container.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = "<p class='empty-message'>Your cart is empty 🌸</p>";
+        summarySection.style.display = "none";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const price = getProductPrice(item.title);
+        const subtotal = price * item.quantity;
+        total += subtotal;
+
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+
+        itemDiv.innerHTML = `
+          <span class="cart-item-title">🌷 ${item.title}</span>
+          <span class="cart-item-quantity">Qty: ${item.quantity}</span>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+
+        container.appendChild(itemDiv);
+      });
+
+      totalDisplay.textContent = `$${total.toFixed(2)}`;
+      summarySection.style.display = "block";
+
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const index = btn.getAttribute("data-index");
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        });
+      });
+    }
+
+    document.getElementById("clear-cart-btn").addEventListener("click", () => {
+      localStorage.removeItem("cart");
+      location.reload();
+    });
+
+    renderCart();
+  </script>
+</body>
+</html>

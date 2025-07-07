@@ -239,6 +239,61 @@ header .fa-bars {
   font-size: 1.5rem;
   color: #777;
 }
+.cart-count {
+  position: absolute;
+  top: -8px;
+  right: -10px;
+  background: #e91e63;
+  color: white;
+  font-size: 12px;
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+#cart-icon {
+  position: relative;
+}
+.user-menu {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-menu .fa-user {
+  font-size: 20px;
+  color: #c45baa;
+}
+
+.user-menu .dropdown {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fce4ec;
+  min-width: 140px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.user-menu .dropdown a {
+  display: block;
+  padding: 10px 15px;
+  color: #5c3d44;
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid #f8bbd0;
+  transition: background-color 0.3s;
+}
+
+.user-menu .dropdown a:last-child {
+  border-bottom: none;
+}
+
+.user-menu .dropdown a:hover {
+  background-color: #f8bbd0;
+  color: #c2185b;
+}
+
+
 
 .products .box-container{
     display:flex ;
@@ -415,48 +470,81 @@ header .fa-bars {
   font-size: 1.5rem;
   opacity: 0.4;
 }
-/*Contact style*/
+/* Contact section style - modern pink design */
 
-.contact .row{
-    display: flex;
-    flex-wrap: wrap-reverse;
-    gap: 1.5rem;
-    align-items: center;
-}
-.contact .row form{
-    flex: 1 1 40rem;
-    padding: 2rem 2.5rem;
-    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
-    border: .1rem solid rgba(0, 0, 0, .1) ;
-    background: #fff;
-}
-.contact .row .image{
-    flex: 1 1 40rem;
-
-}
-.contact .row .image img{
-        width: 100%;
-
-}
-.contact .row form .box{
-    padding: 1rem;
-    font-size: 1.7rem;
-    color: #333;
-    text-transform: none;
-    border:.1rem solid rgba(0, 0, 0, .1);
-    border-radius: .5rem;
-    margin: .7rem 0;
-    width: 100%;
-}
-.contact .row form .box:focus{
-    border-color: var(--pink);
-
+.contact {
+  background-color: #fff0f5;
+  padding: 3rem 2rem;
 }
 
-.contact .row form textarea{
-    height: 15rem;
-    resize: none;
+.contact .row {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
 }
+
+.contact .row form {
+  flex: 1 1 40rem;
+  padding: 2rem;
+  background: #fce4ec;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 1rem;
+  border: 1px solid #f8bbd0;
+}
+
+.contact .row .image {
+  flex: 1 1 40rem;
+  text-align: center;
+}
+
+.contact .row .image img {
+  width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+}
+
+.contact .row form .box,
+.contact .row form textarea {
+  width: 100%;
+  padding: 1.2rem;
+  font-size: 1.6rem;
+  color: #5c3d44;
+  background: #fff;
+  border: 1px solid #f8bbd0;
+  border-radius: 0.8rem;
+  margin: 1rem 0;
+}
+
+.contact .row form .box:focus,
+.contact .row form textarea:focus {
+  outline: none;
+  border-color: #ec407a;
+  box-shadow: 0 0 6px rgba(236, 64, 122, 0.3);
+}
+
+.contact .row form textarea {
+  height: 12rem;
+  resize: none;
+}
+
+.contact .row form .btn {
+  background-color: #ec407a;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: background-color 0.3s;
+}
+
+.contact .row form .btn:hover {
+  background-color: #d81b60;
+}
+
 /*Footer*/
 .footer .box-container {
     display: flex;
@@ -477,8 +565,8 @@ header .fa-bars {
 .footer .box-container .box a {
     display: block;
     color: #333;
-    font-size: 1.2rem; /* تم تصغير الحجم */
-    padding: 0.5rem 0; /* تقليل padding عمودي */
+    font-size: 1.2rem; 
+    padding: 0.5rem 0; 
     text-decoration: none;
 }
 
