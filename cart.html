@@ -117,18 +117,23 @@
       renderCart();
     });
 
-    payBtn.addEventListener("click", () => {
-      const method = paymentMethodSelect.value;
-      const total = cart.reduce((sum, item) => sum + getProductPrice(item.title) * item.quantity, 0).toFixed(2);
+   
+  payBtn.addEventListener("click", () => {
+  const method = paymentMethodSelect.value;
+  const total = cart.reduce((sum, item) => sum + getProductPrice(item.title) * item.quantity, 0).toFixed(2);
 
-      alert(`You chose to pay $${total} using ${method.toUpperCase()}!`);
+  // Alert 3la payment
+  alert(`You chose to pay $${total} using ${method.toUpperCase()}!`);
 
-      // Clear cart after payment
-      localStorage.removeItem("cart");
-      renderCart();
-    });
+  // Clear cart
+  cart.length = 0; // clear array
+  localStorage.removeItem("cart"); // remove from localStorage
 
-    renderCart();
+  // Refresh cart display
+  renderCart();
+});
+
+
   </script>
 
 </body>
