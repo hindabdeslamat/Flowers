@@ -267,7 +267,7 @@ header .fa-bars {
 .user-menu .dropdown {
   display: none;
   position: absolute;
-  top: 30px;   
+  top: 20px;   
   right: 0;
   background-color: #fce4ec;
   min-width: 140px;
