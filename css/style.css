@@ -252,25 +252,28 @@ header .fa-bars {
 #cart-icon {
   position: relative;
 }
+
 .user-menu {
-  position: relative;
+  position: relative; 
   display: inline-block;
-  cursor: pointer;
 }
 
 .user-menu .fa-user {
-  font-size: 20px;
+  font-size: 22px;
   color: #c45baa;
+  cursor: pointer;
 }
 
 .user-menu .dropdown {
   display: none;
   position: absolute;
+  top: 30px;   
   right: 0;
   background-color: #fce4ec;
   min-width: 140px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
   z-index: 1000;
 }
 
@@ -281,7 +284,6 @@ header .fa-bars {
   text-decoration: none;
   font-weight: 500;
   border-bottom: 1px solid #f8bbd0;
-  transition: background-color 0.3s;
 }
 
 .user-menu .dropdown a:last-child {
@@ -292,7 +294,6 @@ header .fa-bars {
   background-color: #f8bbd0;
   color: #c2185b;
 }
-
 
 
 .products .box-container{
