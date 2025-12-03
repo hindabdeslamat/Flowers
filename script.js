@@ -12,6 +12,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCartCount();
 
+    function addToFavorites(id, name, image) {
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+  if (!favorites.some(item => item.id === id)) {
+    favorites.push({ id, name, image });
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    alert("Added to Favorites ❤️");
+  } else {
+    alert("Already in Favorites ❤️");
+  }
+}
+
+
   
 
     addCartButtons.forEach((btn) => {
