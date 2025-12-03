@@ -108,19 +108,20 @@ document.getElementById("contact-form").addEventListener("submit", function(even
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
 // Add product to favorites
-document.querySelectorAll(".add-to-fav").forEach((btn) => {
+const favButtons = document.querySelectorAll(".add-fav");
+
+favButtons.forEach(btn => {
     btn.addEventListener("click", function (e) {
         e.preventDefault();
 
-        let box = this.closest(".box");
-
-        let product = {
-            name: box.dataset.name,
-            price: box.dataset.price,
-            image: box.dataset.image
+        const product = {
+            name: this.dataset.name,
+            price: this.dataset.price,
+            image: this.dataset.image
         };
 
-        // Avoid duplicates
+        let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
         if (!favorites.some(item => item.name === product.name)) {
             favorites.push(product);
             localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -130,4 +131,7 @@ document.querySelectorAll(".add-to-fav").forEach((btn) => {
         }
     });
 });
+
+
+   
 
