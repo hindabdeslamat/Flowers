@@ -1,61 +1,56 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  const container = document.getElementById("cart-container");
-  const totalDisplay = document.getElementById("total-price");
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const container = document.getElementById("cart-container");
+    const totalDisplay = document.getElementById("total-price");
+    const summarySection = document.getElementById("cart-summary");
 
-  function renderCart() {
-    container.innerHTML = "";
-    let total = 0;
-
-    if (cart.length === 0) {
-      container.innerHTML = `<p class="empty-message">Your cart is empty 🌸</p>`;
-      totalDisplay.textContent = "$0.00";
-      return;
+    function getProductPrice(title) {
+      const prices = { "Flower Pot": 13.99 };
+      return prices[title] || 10.00;
     }
 
-    cart.forEach((item, index) => {
-      const price = getProductPrice(item.title);
-      const subtotal = price * item.quantity;
-      total += subtotal;
+    function renderCart() {
+      container.innerHTML = "";
+      let total = 0;
 
-      const itemDiv = document.createElement("div");
-      itemDiv.classList.add("cart-item");
+      if (cart.length === 0) {
+        container.innerHTML = "<p class='empty-message'>Your cart is empty 🌸</p>";
+        summarySection.style.display = "none";
+        return;
+      }
 
-      itemDiv.innerHTML = `
-        <div class="cart-item-title">🌷 ${item.title}</div>
-        <div class="cart-item-quantity">x ${item.quantity}</div>
-        <button class="remove-btn" data-index="${index}">Remove</button>
-      `;
+      cart.forEach((item, index) => {
+        const price = getProductPrice(item.title);
+        const subtotal = price * item.quantity;
+        total += subtotal;
 
-      container.appendChild(itemDiv);
+        const itemDiv = document.createElement("div");
+        itemDiv.className = "cart-item";
+
+        itemDiv.innerHTML = `
+          <span class="cart-item-title">🌷 ${item.title}</span>
+          <span class="cart-item-quantity">Qty: ${item.quantity}</span>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+
+        container.appendChild(itemDiv);
+      });
+
+      totalDisplay.textContent = `$${total.toFixed(2)}`;
+      summarySection.style.display = "block";
+
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const index = btn.getAttribute("data-index");
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        });
+      });
+    }
+
+    document.getElementById("clear-cart-btn").addEventListener("click", () => {
+      localStorage.removeItem("cart");
+      location.reload();
     });
 
-    totalDisplay.textContent = `$${total.toFixed(2)}`;
-  }
-
-  // Price function (you can improve it by linking real prices)
-  function getProductPrice(title) {
-    const prices = {
-      "Flower Pot": 13.99,
-    };
-    return prices[title] || 10.00; // Default price
-  }
-
-  // Remove one item
-  container.addEventListener("click", (e) => {
-    if (e.target.classList.contains("remove-btn")) {
-      const index = e.target.getAttribute("data-index");
-      cart.splice(index, 1);
-      localStorage.setItem("cart", JSON.stringify(cart));
-      renderCart();
-    }
-  });
-
-  // Clear all
-  document.querySelector(".clear-cart-btn").addEventListener("click", () => {
-    localStorage.removeItem("cart");
-    location.reload();
-  });
-
-  renderCart();
-});
+    renderCart();
