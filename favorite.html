@@ -1,102 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Favorites</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <style>
-    body {
-      background: #fce4ec;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .favorites-container {
-      width: 90%;
-      margin: 40px auto;
-    }
-
-    h1 {
-      text-align: center;
-      color: #c2185b;
-      margin-bottom: 20px;
-    }
-
-    .favorite-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 20px;
-    }
-
-    .fav-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 15px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-
-    .fav-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 10px;
-    }
-
-    .fav-card h3 {
-      color: #5c3d44;
-      margin: 10px 0;
-    }
-
-    .fav-card button {
-      padding: 8px 15px;
-      border: none;
-      background: #c2185b;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .fav-card button:hover {
-      background: #e91e63;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>My Favorites</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .fav-container {
+            max-width: 900px;
+            margin: 50px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .fav-box {
+            background: #ffe4f1;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .fav-box img {
+            width: 100%;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .remove-btn {
+            margin-top: 10px;
+            display: inline-block;
+            padding: 8px 15px;
+            background: #ff5b9e;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .remove-btn:hover {
+            background: #d94b85;
+        }
+    </style>
 </head>
 <body>
 
-<div class="favorites-container">
-  <h1>My Favorite Flowers</h1>
-  <div class="favorite-list" id="favoriteList"></div>
-</div>
+<h1 style="text-align:center; margin-top:30px;">My Favorite Products ❤️</h1>
+
+<div class="fav-container" id="favList"></div>
 
 <script>
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    let favList = document.getElementById("favList");
 
-  function displayFavorites() {
-    const container = document.getElementById("favoriteList");
+    function displayFavorites() {
+        favList.innerHTML = "";
 
-    if (favorites.length === 0) {
-      container.innerHTML = "<p style='text-align:center; color:#777;'>No favorite items yet 🌸</p>";
-      return;
+        if (favorites.length === 0) {
+            favList.innerHTML = "<h2 style='text-align:center;'>No favorite products yet 💔</h2>";
+            return;
+        }
+
+        favorites.forEach((item, index) => {
+            favList.innerHTML += `
+                <div class="fav-box">
+                    <img src="${item.image}" alt="">
+                    <h3>${item.name}</h3>
+                    <p>$${item.price}</p>
+                    <button class="remove-btn" onclick="removeFav(${index})">Remove</button>
+                </div>
+            `;
+        });
     }
 
-    container.innerHTML = favorites.map(item => `
-      <div class="fav-card">
-        <img src="${item.image}" alt="">
-        <h3>${item.name}</h3>
-        <button onclick="removeFavorite('${item.id}')">Remove</button>
-      </div>
-    `).join("");
-  }
+    function removeFav(index) {
+        favorites.splice(index, 1);
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+        displayFavorites();
+    }
 
-  function removeFavorite(id) {
-    favorites = favorites.filter(item => item.id !== id);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
     displayFavorites();
-  }
-
-  displayFavorites();
 </script>
 
 </body>
