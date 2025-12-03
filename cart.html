@@ -36,6 +36,16 @@
     <p>Total: <span id="total-price">$0.00</span></p>
     <button class="clear-cart-btn" id="clear-cart-btn">Clear Cart</button>
   </div>
+  <div class="payment-section" id="payment-section" style="display:none; text-align:center; margin-top:1rem;">
+  <label for="payment-method" style="margin-right:0.5rem; font-weight:bold;">Payment Method:</label>
+  <select id="payment-method">
+    <option value="card">Credit/Debit Card</option>
+    <option value="paypal">PayPal</option>
+    <option value="cash">Cash on Delivery</option>
+  </select>
+  <button id="pay-btn" style="margin-left:1rem; background:#4caf50; color:white; padding:8px 16px; border:none; border-radius:5px; cursor:pointer;">Pay</button>
+</div>
+
 
   <a href="index.html" class="btn-back">← Back to Shop</a>
 
@@ -97,6 +107,32 @@
     });
 
     renderCart();
+    const paymentSection = document.getElementById("payment-section");
+const payBtn = document.getElementById("pay-btn");
+const paymentMethodSelect = document.getElementById("payment-method");
+
+function updatePaymentSection() {
+  if (cart.length > 0) {
+    paymentSection.style.display = "block";
+  } else {
+    paymentSection.style.display = "none";
+  }
+}
+
+// Ajouti had f renderCart() b3d `summarySection.style.display = "block";`
+updatePaymentSection();
+
+// Event listener 3la pay button
+payBtn.addEventListener("click", () => {
+  const method = paymentMethodSelect.value;
+  const total = cart.reduce((sum, item) => sum + getProductPrice(item.title) * item.quantity, 0).toFixed(2);
+  
+  alert(`You chose to pay $${total} using ${method.toUpperCase()}!`);
+  
+  // Optionally, clear cart after payment
+  localStorage.removeItem("cart");
+  renderCart();
+});
   </script>
 
 </body>
