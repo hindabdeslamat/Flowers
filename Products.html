@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <style>
+    body { font-family: 'Poppins', sans-serif; background: #fff0f5; margin: 0; padding: 2rem; }
+    h1 { text-align: center; color: #c45b5b; margin-bottom: 2rem; }
+    .products-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; max-width: 1000px; margin: auto; }
+    .product { background: #fce4ec; padding: 1rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: center; }
+    .product img { max-width: 100%; border-radius: 10px; }
+    .product-title { font-weight: bold; margin-top: 0.5rem; color: #5c3d44; }
+    .product-desc { font-size: 0.9rem; color: #7c6169; margin: 0.5rem 0; }
+    .add-btn { background: #ec407a; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .add-btn:hover { background: #c2185b; }
+    .btn-cart { display:block; width: fit-content; margin:2rem auto 0; background:#f06292; color:white; text-decoration:none; padding:10px 20px; border-radius:8px; font-weight:bold; text-align:center; }
+    .btn-cart:hover { background:#e91e63; }
+  </style>
+</head>
+<body>
+
+  <h1>Our Products 🌷</h1>
+
+  <div class="products-container" id="products-container">
+    <!-- Products will be inserted by JS -->
+  </div>
+
+  <a href="cart.html" class="btn-cart">Go to Cart 🛍️</a>
+
+  <script>
+    const products = [
+      { title: "Flower Pot", desc: "Beautiful ceramic flower pot.", img: "https://via.placeholder.com/250?text=Flower+Pot" },
+      { title: "Vase", desc: "Elegant glass vase for home.", img: "https://via.placeholder.com/250?text=Vase" },
+      { title: "Plant", desc: "Small indoor plant.", img: "https://via.placeholder.com/250?text=Plant" }
+    ];
+
+    const container = document.getElementById("products-container");
+
+    function renderProducts() {
+      products.forEach((product, index) => {
+        const div = document.createElement("div");
+        div.className = "product";
+        div.innerHTML = `
+          <img src="${product.img}" alt="${product.title}">
+          <div class="product-title">${product.title}</div>
+          <div class="product-desc">${product.desc}</div>
+          <button class="add-btn" data-index="${index}">Add to Cart</button>
+        `;
+        container.appendChild(div);
+      });
+
+      // Add to cart functionality
+      document.querySelectorAll(".add-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const index = btn.getAttribute("data-index");
+          const product = products[index];
+          
+          // Get cart from localStorage
+          let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+          // Check if product exists in cart
+          const existing = cart.find(item => item.title === product.title);
+          if (existing) {
+            existing.quantity += 1;
+          } else {
+            cart.push({ title: product.title, quantity: 1 });
+          }
+
+          localStorage.setItem("cart", JSON.stringify(cart));
+          alert(`${product.title} added to cart!`);
+        });
+      });
+    }
+
+    renderProducts();
+  </script>
+</body>
+</html>
