@@ -12,17 +12,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateCartCount();
 
-    function addToFavorites(id, name, image) {
-  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
-
-  if (!favorites.some(item => item.id === id)) {
-    favorites.push({ id, name, image });
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    alert("Added to Favorites ❤️");
-  } else {
-    alert("Already in Favorites ❤️");
-  }
-}
 
 
   
@@ -114,3 +103,31 @@ document.getElementById("contact-form").addEventListener("submit", function(even
     msg.style.color = "red";
   });
 });
+// ----- FAVORITES SYSTEM -----
+
+let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+
+// Add product to favorites
+document.querySelectorAll(".add-to-fav").forEach((btn) => {
+    btn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        let box = this.closest(".box");
+
+        let product = {
+            name: box.dataset.name,
+            price: box.dataset.price,
+            image: box.dataset.image
+        };
+
+        // Avoid duplicates
+        if (!favorites.some(item => item.name === product.name)) {
+            favorites.push(product);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            alert("Added to favorites ❤️");
+        } else {
+            alert("Already in favorites!");
+        }
+    });
+});
+
