@@ -57,6 +57,7 @@
   <a href="index.html" class="btn-back">← Back to Shop</a>
 
   <script>
+    // Get cart from localStorage or empty array
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const container = document.getElementById("cart-container");
     const totalDisplay = document.getElementById("total-price");
@@ -65,11 +66,13 @@
     const payBtn = document.getElementById("pay-btn");
     const paymentMethodSelect = document.getElementById("payment-method");
 
+    // Function to get product price
     function getProductPrice(title) {
-      const prices = { "Flower Pot": 13.99 };
+      const prices = { "Flower Pot": 13.99, "Vase": 20.00, "Plant": 15.50 };
       return prices[title] || 10.00;
     }
 
+    // Render cart
     function renderCart() {
       container.innerHTML = "";
       let total = 0;
@@ -94,7 +97,6 @@
           <span class="cart-item-quantity">Qty: ${item.quantity}</span>
           <button class="remove-btn" data-index="${index}">Remove</button>
         `;
-
         container.appendChild(itemDiv);
       });
 
@@ -102,6 +104,7 @@
       summarySection.style.display = "block";
       paymentSection.style.display = "block";
 
+      // Remove buttons
       document.querySelectorAll(".remove-btn").forEach(btn => {
         btn.addEventListener("click", () => {
           const index = btn.getAttribute("data-index");
@@ -112,28 +115,26 @@
       });
     }
 
+    // Clear cart button
     document.getElementById("clear-cart-btn").addEventListener("click", () => {
+      localStorage.removeItem("cart");
+      cart.length = 0;
+      renderCart();
+    });
+
+    // Pay button
+    payBtn.addEventListener("click", () => {
+      const method = paymentMethodSelect.value;
+      const total = cart.reduce((sum, item) => sum + getProductPrice(item.title) * item.quantity, 0).toFixed(2);
+
+      alert(`You chose to pay $${total} using ${method.toUpperCase()}!`);
+
+      cart.length = 0;
       localStorage.removeItem("cart");
       renderCart();
     });
 
-   
-  payBtn.addEventListener("click", () => {
-  const method = paymentMethodSelect.value;
-  const total = cart.reduce((sum, item) => sum + getProductPrice(item.title) * item.quantity, 0).toFixed(2);
-
-  // Alert 3la payment
-  alert(`You chose to pay $${total} using ${method.toUpperCase()}!`);
-
-  // Clear cart
-  cart.length = 0; // clear array
-  localStorage.removeItem("cart"); // remove from localStorage
-
-  // Refresh cart display
-  renderCart();
-});
-
-
+    renderCart();
   </script>
 
 </body>
