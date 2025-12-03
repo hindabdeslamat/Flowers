@@ -267,23 +267,31 @@ header .fa-bars {
 .user-menu .dropdown {
   display: none;
   position: absolute;
-  top: 20px;   
+  top: 35px;
   right: 0;
   background-color: #fce4ec;
-  min-width: 140px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  min-width: 120px;        
+  padding: 8px 0;          
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   overflow: hidden;
   z-index: 1000;
+    
 }
 
 .user-menu .dropdown a {
   display: block;
-  padding: 10px 15px;
-  color: #5c3d44;
+  padding: 8px 15px;
+  font-size: 14px;          
+  color: #4a4a4a;
   text-decoration: none;
+  transition: background 0.3s;
   font-weight: 500;
   border-bottom: 1px solid #f8bbd0;
+}
+
+.user-menu .dropdown a:hover {
+  background-color: #f8d7e0;
 }
 
 .user-menu .dropdown a:last-child {
